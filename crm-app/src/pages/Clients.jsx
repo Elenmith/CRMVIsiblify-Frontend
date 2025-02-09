@@ -17,23 +17,19 @@ const Clients = () => {
     dispatch(fetchClients());
   }, [dispatch]);
 
-  // Filtrowanie klientów według wpisanej nazwy
   const filteredClients = clients.filter((client) =>
     client.companyName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Funkcja rozpoczynająca edycję
   const startEditing = (client) => {
     setEditingClient(client.id);
     setEditedData({ ...client });
   };
 
-  // Funkcja do edytowania wartości
   const handleEditChange = (e, field) => {
     setEditedData({ ...editedData, [field]: e.target.value });
   };
 
-  // Zatwierdzenie edycji
   const submitEdit = () => {
     dispatch(updateClient(editedData));
     setEditingClient(null);
@@ -42,8 +38,6 @@ const Clients = () => {
   return (
     <div className="ml-64 min-h-screen p-10 bg-gray-100">
       <h1 className="text-4xl font-bold mb-6">Lista firm</h1>
-
-      {/* Wyszukiwanie klientów */}
       <div className="mb-6 flex gap-2">
         <input
           type="text"
@@ -53,17 +47,13 @@ const Clients = () => {
           className="border p-2 rounded flex-1"
         />
       </div>
-
       {loading && <p>Ładowanie...</p>}
       {error && <p className="text-red-500">Błąd: {error}</p>}
-
-      {/* Lista klientów */}
       <ul className="space-y-4">
         {filteredClients.length > 0 ? (
           filteredClients.map((client) => (
             <li key={client.id} className="bg-white p-4 shadow-md rounded-lg">
               {editingClient === client.id ? (
-                // Formularz edycji
                 <div>
                   <input
                     type="text"
@@ -73,8 +63,20 @@ const Clients = () => {
                   />
                   <input
                     type="text"
-                    value={editedData.address}
-                    onChange={(e) => handleEditChange(e, "address")}
+                    value={editedData.streetAddress}
+                    onChange={(e) => handleEditChange(e, "streetAddress")}
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <input
+                    type="text"
+                    value={editedData.postalCode}
+                    onChange={(e) => handleEditChange(e, "postalCode")}
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <input
+                    type="text"
+                    value={editedData.addressLocality}
+                    onChange={(e) => handleEditChange(e, "addressLocality")}
                     className="border p-2 rounded w-full mb-2"
                   />
                   <input
@@ -87,6 +89,24 @@ const Clients = () => {
                     type="text"
                     value={editedData.phoneNumber}
                     onChange={(e) => handleEditChange(e, "phoneNumber")}
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <input
+                    type="text"
+                    value={editedData.url}
+                    onChange={(e) => handleEditChange(e, "url")}
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <input
+                    type="text"
+                    value={editedData.sameAs}
+                    onChange={(e) => handleEditChange(e, "sameAs")}
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <input
+                    type="text"
+                    value={editedData.type}
+                    onChange={(e) => handleEditChange(e, "type")}
                     className="border p-2 rounded w-full mb-2"
                   />
                   <div className="flex gap-2">
@@ -105,13 +125,16 @@ const Clients = () => {
                   </div>
                 </div>
               ) : (
-                // Widok normalny klienta
                 <div className="flex justify-between">
                   <span>
                     <strong>{client.companyName}</strong> <br />
-                    📍 {client.address} <br />
+                    📍 {client.streetAddress}, {client.postalCode},{" "}
+                    {client.addressLocality} <br />
+                    🌐 {client.url} <br />
+                    🔗 {client.sameAs} <br />
                     ✉️ {client.email} <br />
-                    📞 {client.phoneNumber}
+                    📞 {client.phoneNumber} <br />
+                    🏢 {client.type}
                   </span>
                   <div className="flex gap-2">
                     <button
