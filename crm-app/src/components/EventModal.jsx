@@ -6,6 +6,7 @@ const EventModal = ({ onClose, onSave, userId, date }) => {
   const [event, setEvent] = useState({
     content: "",
     time: "",
+    description: "",
     color: "#3498db",
   });
 
@@ -27,6 +28,7 @@ const EventModal = ({ onClose, onSave, userId, date }) => {
       time: event.time || "00:00", // Domyślna godzina jeśli pusta
       content: event.content,
       color: event.color,
+      description: event.description || "Brak opisu",
     };
 
     console.log("📤 Wysyłane dane:", JSON.stringify(newEvent, null, 2));
@@ -51,8 +53,17 @@ const EventModal = ({ onClose, onSave, userId, date }) => {
         </label>
         <input
           type="text"
-          name="content" // <-- Zmienione z `title`
+          name="content"
           placeholder="Wpisz treść wydarzenia"
+          className="border p-2 w-full mt-1"
+          onChange={handleInputChange}
+        />
+
+        <label className="block text-sm font-semibold mt-2">Opis</label>
+        <input
+          type="text"
+          name="description"
+          placeholder="Wpisz opis wydarzenia"
           className="border p-2 w-full mt-1"
           onChange={handleInputChange}
         />
