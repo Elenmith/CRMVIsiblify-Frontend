@@ -29,7 +29,7 @@ const CalendarDay = ({ date, events = [], onAddEvent }) => {
               key={event.id}
               className="bg-blue-500 text-white text-xs rounded p-1 mt-1"
             >
-              {event.content}
+              <span className="font-bold">{event.time}</span> - {event.content}
             </div>
           ))}
         </div>
@@ -41,6 +41,9 @@ const CalendarDay = ({ date, events = [], onAddEvent }) => {
           {events.map((event) => (
             <div key={event.id} className="mb-2">
               <p className="font-bold">{event.content}</p>
+              <p className="text-xs text-gray-600">
+                🕒 {event.time || "Brak godziny"}
+              </p>
               <p className="text-xs text-gray-600">📅 {event.date}</p>
             </div>
           ))}

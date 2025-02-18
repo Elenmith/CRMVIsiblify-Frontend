@@ -37,7 +37,12 @@ const Calendar = () => {
   };
 
   const handleEventAdded = (newEvent) => {
-    setEvents((prevEvents) => [...prevEvents, newEvent]);
+    const eventWithTime = {
+      ...newEvent,
+      time: newEvent.time || "00:00:00", // Domyślna godzina, jeśli brak wartości
+    };
+
+    setEvents((prevEvents) => [...prevEvents, eventWithTime]);
     setShowModal(false);
   };
 

@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import axios from "axios";
 
-// eslint-disable-next-line no-unused-vars
 const EventModal = ({ onClose, onSave, userId, date }) => {
   const [event, setEvent] = useState({
     content: "",
@@ -23,9 +22,9 @@ const EventModal = ({ onClose, onSave, userId, date }) => {
     }
 
     const newEvent = {
-      user: { id: 1 }, // Domyślny user_id = 1 Radek
-      date: `2025-02-${date < 10 ? "0" + date : date}`,
-      time: event.time,
+      user: { id: userId }, // Pobiera ID użytkownika dynamicznie
+      date: `2025-02-${String(date).padStart(2, "0")}`, // Formatowanie daty
+      time: event.time || "00:00", // Domyślna godzina jeśli pusta
       content: event.content,
       color: event.color,
     };
@@ -58,27 +57,13 @@ const EventModal = ({ onClose, onSave, userId, date }) => {
           onChange={handleInputChange}
         />
 
-        <label className="block text-sm font-semibold mt-2">Godzina</label>
+        <label className="text-lg font-bold mb-2">Godzina:</label>
         <input
           type="time"
           name="time"
-          className="border p-2 w-full mt-1"
-          onChange={handleInputChange}
-        />
-
-        <label className="block text-sm font-semibold mt-2">Tytuł</label>
-        <input
-          type="text"
-          placeholder="Tytuł"
-          className="border p-2 w-full mt-1"
-          onChange={(e) => setEvent({ ...event, title: e.target.value })}
-        />
-
-        <label className="block text-sm font-semibold mt-2">Opis</label>
-        <textarea
-          placeholder="Opis wydarzenia"
-          className="border p-2 w-full mt-1"
-          onChange={(e) => setEvent({ ...event, description: e.target.value })}
+          value={event.time}
+          onChange={handleInputChange} // Obsługa zmiany przez funkcję handleInputChange
+          className="border p-2 w-full"
         />
 
         <div className="flex justify-end gap-2 mt-4">
